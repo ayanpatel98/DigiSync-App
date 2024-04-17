@@ -1,10 +1,13 @@
-import React, {useState} from 'react'
-import { useHistory } from 'react-router-dom'
+import React, {useContext, useState} from 'react';
+import { useHistory } from 'react-router-dom';
+import noteContext from '../context/notes/noteContext';
 
 
 const Login = (props) => {
     const [credentials, setCredentials] = useState({email: "", password: ""}) 
     let history = useHistory();
+    const context = useContext(noteContext);
+    const {getUser} = context;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,6 +23,7 @@ const Login = (props) => {
             // Save the auth token and redirect
             localStorage.setItem('token', json.authtoken); 
             history.push("/");
+            getUser();
 
         }
         else{
@@ -44,7 +48,7 @@ const Login = (props) => {
                     <input type="password" className="form-control" value={credentials.password} onChange={onChange} name="password" id="password" />
                 </div>
 
-                <button type="submit" className="btn btn-primary">Submit</button>
+                <button type="submit" className="btn btn-primary">Login</button>
             </form>
         </div>
     )

@@ -5,10 +5,12 @@ const NoteState = (props) => {
   const host = "http://localhost:5000"
   const notesInitial = []
   const [notes, setNotes] = useState(notesInitial);
+  const [user, setUser] = useState('');
 
   // Reset all notes when sign out
   const signOut = () => {
-    setNotes(notesInitial)
+    setNotes(notesInitial);
+    setUser('');
   }
   
   // Get all Notes
@@ -28,6 +30,20 @@ const NoteState = (props) => {
     }
   }
 
+  // Get the User
+  const getUser = async () => {
+    if(localStorage.getItem('token')){
+      const response = await fetch(`${host}/api/auth/getuser`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          "auth-token": localStorage.getItem('token')
+        }
+      });
+      const json = await response.json();
+      setUser(json.name);
+    }
+  }
   // Add a Note
   const addNote = async (title, description, tag) => {
     // TODO: API Call
@@ -88,7 +104,7 @@ const NoteState = (props) => {
   }
 
   return (
-    <NoteContext.Provider value={{ notes, addNote, deleteNote, editNote, getNotes, signOut }}>
+    <NoteContext.Provider value={{ notes, user, addNote, deleteNote, editNote, getNotes, signOut, getUser }}>
       {props.children}
     </NoteContext.Provider>
   )

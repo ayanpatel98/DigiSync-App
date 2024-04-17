@@ -1,4 +1,4 @@
-import {React, useContext} from 'react'
+import {React, useContext, useState} from 'react'
 import { Link, useLocation, useHistory } from "react-router-dom";
 import noteContext from '../context/notes/noteContext';
 
@@ -6,7 +6,7 @@ const Navbar = () => {
     let location = useLocation();
     let history = useHistory();
     const context = useContext(noteContext);
-    const {signOut} = context;
+    const {signOut, user} = context;
 
     const handleSignOut = () =>{
         localStorage.removeItem('token');
@@ -33,9 +33,14 @@ const Navbar = () => {
                     </ul>
                     {localStorage.getItem('token')
                     ?
-                        <form className="d-flex">
-                            <button className="btn btn-primary mx-1" onClick={handleSignOut}>Sign Out</button>
-                        </form>
+                        <>
+                            <div className="text-center inline-block">
+                                <button className="btn btn-primary mx-1">{user}</button>
+                            </div>
+                            <form className="d-flex">
+                                <button className="btn btn-primary mx-1" onClick={handleSignOut}>Sign Out</button>
+                            </form>
+                        </>
                     :
                         <form className="d-flex">
                             <Link className="btn btn-primary mx-1" to="/login" role="button">Login</Link>

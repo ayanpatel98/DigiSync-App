@@ -5,10 +5,10 @@ import AddNote from './AddNote';
 
 const Notes = () => {
     const context = useContext(noteContext);
-    const { notes, getNotes, editNote } = context;
+    const { notes, getNotes, editNote, getUser } = context;
     useEffect(() => {
-        getNotes()
-        // eslint-disable-next-line
+        getNotes();
+        getUser();
     }, [])
     const ref = useRef(null)
     const refClose = useRef(null)
@@ -31,7 +31,7 @@ const Notes = () => {
     return (
         <>
             {
-                notes.length>0 
+                localStorage.getItem('token')
                 ? 
                 <>
                     <AddNote />
