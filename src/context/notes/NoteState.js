@@ -6,11 +6,13 @@ const NoteState = (props) => {
   const notesInitial = []
   const [notes, setNotes] = useState(notesInitial);
   const [user, setUser] = useState('');
+  const [isLoggedIn, setLogin] = useState(false);
 
   // Reset all notes when sign out
   const signOut = () => {
     setNotes(notesInitial);
     setUser('');
+    setLogin(false)
   }
   
   // Get all Notes
@@ -42,6 +44,7 @@ const NoteState = (props) => {
       });
       const json = await response.json();
       setUser(json.name);
+      setLogin(true);
     }
   }
   // Add a Note
@@ -104,7 +107,7 @@ const NoteState = (props) => {
   }
 
   return (
-    <NoteContext.Provider value={{ notes, user, addNote, deleteNote, editNote, getNotes, signOut, getUser }}>
+    <NoteContext.Provider value={{ notes, user, isLoggedIn, addNote, deleteNote, editNote, getNotes, signOut, getUser }}>
       {props.children}
     </NoteContext.Provider>
   )

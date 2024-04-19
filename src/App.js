@@ -24,9 +24,10 @@ function App() {
               <Route exact path="/">
                 <Home />
               </Route>
-              <Route exact path="/notebook">
-                <NoteBook />
-              </Route>
+              {/* <Route exact path="/notebook">
+                <Home /> */}
+                {/* <NoteBook /> */}
+              {/* </Route> */}
               <Route exact path="/login">
                 <Login />
               </Route>

@@ -5,9 +5,6 @@ const Home = () => {
 
     return (
         <>
-            <h1 className='text-center mt-8'>
-                <b>Please login to get personalized experience</b>
-            </h1>
             <TopHeadlines/>
         </>
     )
