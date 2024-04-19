@@ -81,7 +81,8 @@ const TopHeadlines = () => {
                         (item.title == "[Removed]") ?
                             ''
                             :
-                            <div className='col-sm-4' style={{ height: '500px' }}>
+                            <div className='col-sm-4 overflow-hidden mt-2' style={{ height: '500px' }}>
+                                <button>add item</button>
                                 <NewsItem key={index} itemData={item} />
                             </div>
                 )
