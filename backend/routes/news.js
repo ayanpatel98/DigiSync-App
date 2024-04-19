@@ -3,18 +3,17 @@ const router = express.Router();
 const fetchuser = require('../middleware/fetchuser');
 const UserNews = require('../models/UserNews');
 
-// ROUTE 1: Get All the Notes using: GET "/api/notes/getuser". Login required
-router.get('/fetchallnotes', fetchuser, async (req, res) => {
+router.get('/fetchallnews', fetchuser, async (req, res) => {
     try {
-        const notes = await Note.find({ user: req.user.id });
-        res.json(notes)
+        const news = await UserNews.find({ user: req.user.id });
+        res.json(news);
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server Error");
     }
 })
 
-// ROUTE 2: Add a new Note using: POST "/api/notes/addnote". Login required
+// ROUTE 2: Add a new Note using: POST "/api/news/addnews". Login required
 router.post('/addnews', fetchuser, async (req, res) => {
         try {
             const { author, title, description, url, urlToImage, publishedAt, content  } = req.body;
@@ -31,7 +30,7 @@ router.post('/addnews', fetchuser, async (req, res) => {
         }
     })
 
-// ROUTE 4: Delete an existing Note using: DELETE "/api/notes/deletenote". Login required
+// ROUTE 4: Delete an existing Note using: DELETE "/api/news/deletenews". Login required
 router.delete('/deletenews/:id', fetchuser, async (req, res) => {
     try {
         // Find the note to be delete and delete it
@@ -70,6 +69,16 @@ router.put('/updatenote/:id', fetchuser, async (req, res) => {
         }
         note = await Note.findByIdAndUpdate(req.params.id, { $set: newNote }, { new: true })
         res.json({ note });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send("Internal Server Error");
+    }
+})
+
+router.get('/fetchallnotes', fetchuser, async (req, res) => {
+    try {
+        const notes = await Note.find({ user: req.user.id });
+        res.json(notes)
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server Error");

@@ -11,6 +11,7 @@ import { Alert } from './components/Alert';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import NoteBook from './components/Notebook';
+import BookmarkedNews from './components/BookmarkedNews';
 
 function App() {
   return (
@@ -24,10 +25,13 @@ function App() {
               <Route exact path="/">
                 <Home />
               </Route>
-              {/* <Route exact path="/notebook">
-                <Home /> */}
-                {/* <NoteBook /> */}
-              {/* </Route> */}
+              <Route exact path="/notebook">
+                {/* <Home /> */}
+                <NoteBook />
+              </Route>
+              <Route exact path="/bookmarks">
+                <BookmarkedNews/>
+              </Route>
               <Route exact path="/login">
                 <Login />
               </Route>

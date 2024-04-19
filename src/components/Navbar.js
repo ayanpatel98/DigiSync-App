@@ -1,4 +1,4 @@
-import {React, useContext, useState} from 'react'
+import { React, useContext, useState } from 'react'
 import { Link, useLocation, useHistory } from "react-router-dom";
 import noteContext from '../context/notes/noteContext';
 
@@ -6,9 +6,9 @@ const Navbar = () => {
     let location = useLocation();
     let history = useHistory();
     const context = useContext(noteContext);
-    const {signOut, user} = context;
+    const { signOut, user, isLoggedIn } = context;
 
-    const handleSignOut = () =>{
+    const handleSignOut = () => {
         localStorage.removeItem('token');
         history.push('/');
         signOut();
@@ -26,13 +26,21 @@ const Navbar = () => {
                         <li className="nav-item">
                             <Link className={`nav-link ${location.pathname === "/" ? "active" : ""}`} aria-current="page" to="/">Home</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className={`nav-link ${location.pathname === "/notebook" ? "active" : ""}`} to="/notebook">NoteBook</Link>
-                        </li>
+                        {
+                            (isLoggedIn)
+                                ?
+
+                                <li className="nav-item">
+                                    {/* <Link className={`nav-link ${location.pathname === "/notebook" ? "active" : ""}`} to="/notebook">NoteBook</Link> */}
+                                    <Link className={`nav-link ${location.pathname === "/bookmarks" ? "active" : ""}`} to="/bookmarks">Bookmarked News</Link>
+                                </li>
+                                :
+                                ''
+                        }
 
                     </ul>
                     {localStorage.getItem('token')
-                    ?
+                        ?
                         <>
                             <div className="text-center inline-block">
                                 <button className="btn btn-primary mx-1">{user}</button>
@@ -41,7 +49,7 @@ const Navbar = () => {
                                 <button className="btn btn-primary mx-1" onClick={handleSignOut}>Sign Out</button>
                             </form>
                         </>
-                    :
+                        :
                         <form className="d-flex">
                             <Link className="btn btn-primary mx-1" to="/login" role="button">Login</Link>
                             <Link className="btn btn-primary mx-1" to="/signup" role="button">Signup</Link>
