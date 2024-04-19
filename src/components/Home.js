@@ -1,10 +1,16 @@
-import Notes from './Notes';
+import React from 'react'
+import TopHeadlines from './TopHeadlines';
 
-export const Home = () => {
+const Home = () => {
 
     return (
-        <div> 
-            <Notes/>
-        </div>
+        <>
+            <h1 className='text-center mt-8'>
+                <b>Please login to get personalized experience</b>
+            </h1>
+            <TopHeadlines/>
+        </>
     )
 }
+
+export default Home;

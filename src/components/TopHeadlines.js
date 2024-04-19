@@ -16,14 +16,19 @@ const TopHeadlines = () => {
     useEffect(()=>{fetchTopHeadlines()}, [])
 
     return (
-        <>
+        <div className='row'>
             {
                 topHeadlines.map(
                     (item)=>
-                    (item.title=="[Removed]") ? '' : <NewsItem key={item.title} itemData={item}/>    
+                    (item.title=="[Removed]") ? 
+                    '' 
+                    :
+                    <div className='col-sm-4' style={{height:'500px'}}>
+                        <NewsItem key={item.title} itemData={item}/>
+                    </div>     
                 )
             }
-        </>
+        </div>
     )
 }
 
