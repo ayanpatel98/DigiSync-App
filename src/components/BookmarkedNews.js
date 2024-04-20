@@ -14,6 +14,8 @@ const BookmarkedNews = () => {
   return (
     <>
       {
+        (bookmarkedNews.length > 0)
+          ?
           <div className='row'>
             {bookmarkedNews.map((item, index) => {
               return (
@@ -24,6 +26,8 @@ const BookmarkedNews = () => {
               )
             })}
           </div>
+          :
+          <h1>No saved bookmarks!</h1>
       }
     </>
   )

@@ -19,7 +19,6 @@ function App() {
       <NoteState>
         <Router>
           <Navbar />
-          <Alert message="Welcome to the NoteBook" />
           <div className="container">
             <Switch>
               <Route exact path="/">

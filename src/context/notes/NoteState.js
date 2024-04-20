@@ -55,18 +55,19 @@ const NoteState = (props) => {
   const addNews = async (newsItem) => {
     // TODO: API Call
     // API Call 
-    const {author, title, description, url, urlToImage, publishedAt, content} = newsItem;
+    const { author, title, description, url, urlToImage, publishedAt, content } = newsItem;
     const response = await fetch(`${host}/api/news/addnews`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         "auth-token": localStorage.getItem('token')
       },
-      body: JSON.stringify({author, title, description, url, urlToImage, publishedAt, content})
+      body: JSON.stringify({ author, title, description, url, urlToImage, publishedAt, content })
     });
 
     const json = await response.json();
-    setBookmarkedNews(bookmarkedNews.concat(json))
+    if (json.status == 200) setBookmarkedNews(bookmarkedNews.concat(json.results))
+    else alert('Cannot bookmark duplicate news!')
   }
 
   // Delete a News
@@ -80,8 +81,10 @@ const NoteState = (props) => {
       }
     });
     const json = await response.json();
-    const newNews = bookmarkedNews.filter((news) => { return news._id !== id })
-    setBookmarkedNews(newNews)
+    if (json.status == 200) {
+      const newNews = bookmarkedNews.filter((news) => { return news._id !== id })
+      setBookmarkedNews(newNews)
+    }
   }
 
   // Get all Notes

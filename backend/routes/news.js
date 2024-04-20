@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const crypto = require('crypto');
 const fetchuser = require('../middleware/fetchuser');
 const UserNews = require('../models/UserNews');
 
@@ -15,35 +16,45 @@ router.get('/fetchallnews', fetchuser, async (req, res) => {
 
 // ROUTE 2: Add a new Note using: POST "/api/news/addnews". Login required
 router.post('/addnews', fetchuser, async (req, res) => {
-        try {
-            const { author, title, description, url, urlToImage, publishedAt, content  } = req.body;
-            const news = new UserNews({
-                author, title, description, url, urlToImage, publishedAt, content, user: req.user.id
-            })
-            const savedNews = await news.save();
+    try {
+        const { author, title, description, url, urlToImage, publishedAt, content } = req.body;
 
-            res.json(savedNews);
+        const news_id = await crypto.createHash('md5').update(title).digest('hex');
 
-        } catch (error) {
-            console.error(error.message);
-            res.status(500).send("Internal Server Error");
+        let newsItem = await UserNews.find({ news_id: news_id, user: req.user.id });
+        if (newsItem.length > 0) {
+            return res.status(400).json({ status: 400, results: "Please do not send duplicate requests" });
         }
-    })
 
-// ROUTE 4: Delete an existing Note using: DELETE "/api/news/deletenews". Login required
+        const news = new UserNews({
+            news_id, author, title, description, url, urlToImage, publishedAt, content, user: req.user.id
+        })
+        const savedNews = await news.save();
+
+        res.json({ status: 200, results: savedNews });
+
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send("Internal Server Error");
+    }
+})
+
+// ROUTE 4: Delete an existing news using: DELETE "/api/news/deletenews". Login required
 router.delete('/deletenews/:id', fetchuser, async (req, res) => {
     try {
-        // Find the note to be delete and delete it
+        // Find the news to be delete and delete it
         let news = await UserNews.findById(req.params.id);
-        if (!news) { return res.status(404).send("News not Found") }
+        if (!news) { 
+            return res.status(404).json({status:404, message: "News not Found"}) 
+        }
 
-        // Allow deletion only if user owns this Note
+        // Allow deletion only if user owns this Note because it checks the user id from the JWT and the database entry
         if (news.user.toString() !== req.user.id) {
-            return res.status(401).send("Not Allowed");
+            return res.status(400).json({status:400, message: "Not Allowed"});
         }
 
         news = await UserNews.findByIdAndDelete(req.params.id)
-        res.json({ "Success": "News has been deleted", news: news });
+        return res.json({ status: 200, message: "News has been deleted", news: news });
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server Error");
