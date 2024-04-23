@@ -15,7 +15,7 @@ const Navbar = () => {
     }
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark position-sticky top-0" style={{ zIndex: '10000' }}>
             <div className="container-fluid">
                 <Link className="navbar-brand" to="/">DigiSync</Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,11 +43,15 @@ const Navbar = () => {
                         ?
                         <>
                             <div className="text-center inline-block">
-                                <button className="btn btn-primary mx-1">{user}</button>
+                                <div class="btn-group dropstart">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Hi, {user}
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-dark ">
+                                        <li className='text-center'><button className="btn btn-primary mx-1" onClick={handleSignOut}>Sign Out</button></li>
+                                    </ul>
+                                </div>
                             </div>
-                            <form className="d-flex">
-                                <button className="btn btn-primary mx-1" onClick={handleSignOut}>Sign Out</button>
-                            </form>
                         </>
                         :
                         <form className="d-flex">

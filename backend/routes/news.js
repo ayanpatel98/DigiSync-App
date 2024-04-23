@@ -44,13 +44,13 @@ router.delete('/deletenews/:id', fetchuser, async (req, res) => {
     try {
         // Find the news to be delete and delete it
         let news = await UserNews.findById(req.params.id);
-        if (!news) { 
-            return res.status(404).json({status:404, message: "News not Found"}) 
+        if (!news) {
+            return res.status(404).json({ status: 404, message: "News not Found" })
         }
 
         // Allow deletion only if user owns this Note because it checks the user id from the JWT and the database entry
         if (news.user.toString() !== req.user.id) {
-            return res.status(400).json({status:400, message: "Not Allowed"});
+            return res.status(400).json({ status: 400, message: "Not Allowed" });
         }
 
         news = await UserNews.findByIdAndDelete(req.params.id)

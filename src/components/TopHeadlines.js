@@ -22,7 +22,7 @@ const TopHeadlines = () => {
     const [loading, setLoading] = useState(true);
 
     const userContext = useContext(noteContext);
-    const { getUser, isLoggedIn, addNews } = userContext;
+    const { getUser, isLoggedIn } = userContext;
 
     const fetchTopHeadlines = async (country, category, page) => {
         setCountry(country);
@@ -71,8 +71,8 @@ const TopHeadlines = () => {
                                 <b>Please login to get personalized experience</b>
                             </h1>
                             :
-                            <div className='row m-3'>
-                                <div className='col-sm-3'>
+                            <div className='row'>
+                                <div className='col-lg-3 col-md-12 m-3'>
                                     <select className="form-select form-select-sm" aria-label="country" onChange={setCountryDropdown}>
                                         <option selected>Select Country</option>
                                         {
@@ -83,7 +83,7 @@ const TopHeadlines = () => {
                                     </select>
                                 </div>
 
-                                <div className='col-sm-3'>
+                                <div className='col-lg-3 col-md-12 m-3'>
                                     <select className="form-select form-select-sm" aria-label="category" onChange={setCategoryDropdown}>
                                         <option selected>Select Category</option>
                                         {
@@ -107,36 +107,38 @@ const TopHeadlines = () => {
                                     (item.title == "[Removed]") ?
                                         ''
                                         :
-                                        <div className='col-sm-4 overflow-hidden mt-2' key={index} style={{ height: '500px' }}>
-                                            <NewsItem itemData={item} />
+                                        <div className='col-lg-4 col-md-6 col-sm-12 mt-2'
+                                            key={index} style={{ height: '500px' }}>
+                                            <NewsItem key={index} itemData={item} />
                                         </div>
                             )
                         }
                     </div>
                     :
-                    <>
-                    {loading && <Spinner />}
-                    <InfiniteScroll
-                        dataLength={topHeadlines.length}
-                        next={fetchMoreData}
-                        hasMore={topHeadlines.length !== totalResults}
-                        loader={<Spinner />}>
-                        <div className='row'>
-                            {
-                                topHeadlines.map(
-                                    (item, index) =>
-                                        (item.title == "[Removed]") ?
-                                            ''
-                                            :
-                                            <div className='col-sm-4 overflow-hidden mt-2' key={index} style={{ height: '500px' }}>
-                                                {(isLoggedIn) ? <button onClick={() => addNews(item)}>add item</button> : ''}
-                                                <NewsItem itemData={item} />
-                                            </div>
-                                )
-                            }
-                        </div>
-                    </InfiniteScroll>
-                    </>
+                    <div className='row'>
+                        {loading && <Spinner />}
+                        <InfiniteScroll
+                            className='overflow-hidden'
+                            dataLength={topHeadlines.length}
+                            next={fetchMoreData}
+                            hasMore={topHeadlines.length !== totalResults}
+                            loader={<Spinner />}>
+                            <div className='row'>
+                                {
+                                    topHeadlines.map(
+                                        (item, index) =>
+                                            (item.title == "[Removed]") ?
+                                                ''
+                                                :
+                                                <div className='col-lg-4 col-md-6 col-sm-12 mt-2'
+                                                    key={index} style={{ height: '500px' }}>
+                                                    <NewsItem itemData={item} />
+                                                </div>
+                                    )
+                                }
+                            </div>
+                        </InfiniteScroll>
+                    </div>
             }
         </>
     )

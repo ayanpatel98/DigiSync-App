@@ -5,7 +5,7 @@ const Home = () => {
 
     return (
         <>
-            <TopHeadlines/>
+            <TopHeadlines />
         </>
     )
 }
