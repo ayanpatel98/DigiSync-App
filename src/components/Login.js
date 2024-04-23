@@ -40,11 +40,12 @@ const Login = (props) => {
     }
 
     return (
-        <div className="btn-group dropstart m-1">
-            <button type="button" className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+        // <div className="btn-group dropstart m-1">
+        <div className="btn-group m-1">
+            <button type="button" className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="inside outside">
                 Login
             </button>
-            <form className="dropdown-menu p-4" onSubmit={handleSubmit}>
+            <form className="dropdown-menu p-4" onSubmit={handleSubmit} style={{left: 'unset', right:'0', width: '300px'}}>
                 <div className="mb-3">
                     <label htmlFor="exampleDropdownFormEmail2" className="form-label">Email address</label>
                     <input type="email" className="form-control" id="email" placeholder="email@example.com"

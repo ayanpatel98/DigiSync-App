@@ -37,11 +37,11 @@ const Signup = () => {
     }
 
     return (
-        <div className="btn-group dropstart m-1">
-            <button type="button" className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+        <div className="btn-group m-1">
+            <button type="button" className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="inside outside">
                 Signup
             </button>
-            <form className="dropdown-menu p-4" onSubmit={handleSubmit}>
+            <form className="dropdown-menu p-4" onSubmit={handleSubmit} style={{left: 'unset', right:'0', width: '300px'}}>
                 <div className="mb-3">
                     <label htmlFor="name" className="form-label">Name</label>
                     <input type="text" className="form-control" placeholder="email@example.com"
