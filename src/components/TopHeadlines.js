@@ -67,11 +67,18 @@ const TopHeadlines = () => {
                     {
                         (!isLoggedIn)
                             ?
-                            <h1 className='text-center mt-8'>
-                                <b>Please login to get personalized experience</b>
-                            </h1>
+                            <div className='col-12'>
+                                <h2 className='text-center mt-3'>
+                                    <b>Please login to get personalized news</b>
+                                </h2>
+                            </div>
                             :
                             <div className='row'>
+                                <div className='col-12'>
+                                    <h2 className='text-center mt-3'>
+                                        <b>Your News Feed</b>
+                                    </h2>
+                                </div>
                                 <div className='col-lg-3 col-md-12 m-3'>
                                     <select className="form-select form-select-sm" aria-label="country" onChange={setCountryDropdown}>
                                         <option selected>Select Country</option>
@@ -100,7 +107,7 @@ const TopHeadlines = () => {
             {
                 (!isLoggedIn)
                     ?
-                    <div className='row'>
+                    <div className='row my-2'>
                         {
                             topHeadlines.map(
                                 (item, index) =>
@@ -115,7 +122,7 @@ const TopHeadlines = () => {
                         }
                     </div>
                     :
-                    <div className='row'>
+                    <div className='row my-2'>
                         {loading && <Spinner />}
                         <InfiniteScroll
                             className='overflow-hidden'

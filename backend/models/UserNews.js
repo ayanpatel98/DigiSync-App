@@ -9,7 +9,7 @@ const UserNewsSchema = new Schema({
     user:{
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        // ref: 'user'
+        ref: 'user'
     },
     author:{
         type: String,

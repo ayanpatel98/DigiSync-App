@@ -1,5 +1,8 @@
 import NoteContext from "./noteContext";
 import { useState } from "react";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+toast.configure();
 
 const NoteState = (props) => {
   const host = "http://localhost:5000"
@@ -16,7 +19,8 @@ const NoteState = (props) => {
     setNotes(notesInitial);
     setBookmarkedNews(initialNews);
     setUser('');
-    setLogin(false)
+    setLogin(false);
+    toast.error("You Logged Out!", { autoClose: 2000 });
   }
 
   // Get the User
@@ -66,7 +70,10 @@ const NoteState = (props) => {
     });
 
     const json = await response.json();
-    if (json.status == 200) setBookmarkedNews(bookmarkedNews.concat(json.results))
+    if (json.status == 200) {
+      setBookmarkedNews(bookmarkedNews.concat(json.results));
+      toast.success("News Bookmarked!", { autoClose: 1000 });
+    }
     else alert('Cannot bookmark duplicate news!')
   }
 
@@ -83,7 +90,8 @@ const NoteState = (props) => {
     const json = await response.json();
     if (json.status == 200) {
       const newNews = bookmarkedNews.filter((news) => { return news._id !== id })
-      setBookmarkedNews(newNews)
+      setBookmarkedNews(newNews);
+      toast.error("News Deleted!", { autoClose: 1000 });
     }
   }
 
