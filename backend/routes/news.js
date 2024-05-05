@@ -14,7 +14,7 @@ router.get('/fetchallnews', fetchuser, async (req, res) => {
     }
 })
 
-// ROUTE 2: Add a new Note using: POST "/api/news/addnews". Login required
+// ROUTE 2: Add a new news using: POST "/api/news/addnews". Login required
 router.post('/addnews', fetchuser, async (req, res) => {
     try {
         const { author, title, description, url, urlToImage, publishedAt, content } = req.body;
@@ -48,48 +48,13 @@ router.delete('/deletenews/:id', fetchuser, async (req, res) => {
             return res.status(404).json({ status: 404, message: "News not Found" })
         }
 
-        // Allow deletion only if user owns this Note because it checks the user id from the JWT and the database entry
+        // Allow deletion only if user owns this news because it checks the user id from the JWT and the database entry
         if (news.user.toString() !== req.user.id) {
             return res.status(400).json({ status: 400, message: "Not Allowed" });
         }
 
         news = await UserNews.findByIdAndDelete(req.params.id)
         return res.json({ status: 200, message: "News has been deleted", news: news });
-    } catch (error) {
-        console.error(error.message);
-        res.status(500).send("Internal Server Error");
-    }
-})
-
-// ROUTE 3: Update an existing Note using: PUT "/api/notes/updatenote". Login required
-router.put('/updatenote/:id', fetchuser, async (req, res) => {
-    const { title, description, tag } = req.body;
-    try {
-        // Create a newNote object
-        const newNote = {};
-        if (title) { newNote.title = title };
-        if (description) { newNote.description = description };
-        if (tag) { newNote.tag = tag };
-
-        // Find the note to be updated and update it
-        let note = await Note.findById(req.params.id);
-        if (!note) { return res.status(404).send("Not Found") }
-
-        if (note.user.toString() !== req.user.id) {
-            return res.status(401).send("Not Allowed");
-        }
-        note = await Note.findByIdAndUpdate(req.params.id, { $set: newNote }, { new: true })
-        res.json({ note });
-    } catch (error) {
-        console.error(error.message);
-        res.status(500).send("Internal Server Error");
-    }
-})
-
-router.get('/fetchallnotes', fetchuser, async (req, res) => {
-    try {
-        const notes = await Note.find({ user: req.user.id });
-        res.json(notes)
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server Error");
