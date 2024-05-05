@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from 'react'
-import noteContext from '../context/notes/noteContext'
+import newsContext from '../context/news/newsContext'
 import NewsItem from './NewsItem'
 
 const BookmarkedNews = () => {
-  const context = useContext(noteContext);
+  const context = useContext(newsContext);
   const { getBookmarkedNews, bookmarkedNews, getUser } = context;
 
   useEffect(() => {

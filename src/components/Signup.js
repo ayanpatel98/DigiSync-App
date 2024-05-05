@@ -1,6 +1,6 @@
 import { React, useState, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
-import noteContext from '../context/notes/noteContext';
+import newsContext from '../context/news/newsContext';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 toast.configure();
@@ -8,7 +8,7 @@ toast.configure();
 const Signup = () => {
     const [credentials, setCredentials] = useState({ name: "", email: "", password: "" })
     let history = useHistory();
-    const context = useContext(noteContext);
+    const context = useContext(newsContext);
     const { getUser } = context;
 
     const handleSubmit = async (e) => {

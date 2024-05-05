@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component';
-import noteContext from '../context/notes/noteContext';
+import newsContext from '../context/news/newsContext';
 import NewsItem from './NewsItem';
 import Spinner from './Spinner';
 
@@ -21,7 +21,7 @@ const TopHeadlines = () => {
     const [totalResults, setTotalResults] = useState(0);
     const [loading, setLoading] = useState(true);
 
-    const userContext = useContext(noteContext);
+    const userContext = useContext(newsContext);
     const { getUser, isLoggedIn } = userContext;
 
     const fetchTopHeadlines = async (country, category, page) => {

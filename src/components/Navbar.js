@@ -1,13 +1,13 @@
 import { React, useContext, useState } from 'react'
 import { Link, useLocation, useHistory } from "react-router-dom";
-import noteContext from '../context/notes/noteContext';
+import newsContext from '../context/news/newsContext';
 import Login from './Login';
 import Signup from './Signup';
 
 const Navbar = () => {
     let location = useLocation();
     let history = useHistory();
-    const context = useContext(noteContext);
+    const context = useContext(newsContext);
     const { signOut, user, isLoggedIn } = context;
 
     const handleSignOut = () => {
@@ -33,7 +33,6 @@ const Navbar = () => {
                                 ?
 
                                 <li className="nav-item">
-                                    {/* <Link className={`nav-link ${location.pathname === "/notebook" ? "active" : ""}`} to="/notebook">NoteBook</Link> */}
                                     <Link className={`nav-link ${location.pathname === "/bookmarks" ? "active" : ""}`} to="/bookmarks">Bookmarked News</Link>
                                 </li>
                                 :

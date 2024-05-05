@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import noteContext from '../context/notes/noteContext';
+import newsContext from '../context/news/newsContext';
 
 const NewsItem = (props) => {
-  const userContext = useContext(noteContext);
+  const userContext = useContext(newsContext);
   const { isLoggedIn, addNews, deleteNews } = userContext;
   const location = useLocation();
 

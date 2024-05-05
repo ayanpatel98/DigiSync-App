@@ -6,27 +6,21 @@ import {
 } from "react-router-dom";
 import Navbar from './components/Navbar';
 import Home from './components/Home';
-import NoteState from './context/notes/NoteState';
-import { Alert } from './components/Alert';
+import NewsState from './context/news/NewsState';
 import Signup from './components/Signup';
 import Login from './components/Login';
-import NoteBook from './components/Notebook';
 import BookmarkedNews from './components/BookmarkedNews';
 
 function App() {
   return (
     <>
-      <NoteState>
+      <NewsState>
         <Router>
           <Navbar />
           <div className="container">
             <Switch>
               <Route exact path="/">
                 <Home />
-              </Route>
-              <Route exact path="/notebook">
-                {/* <Home /> */}
-                <NoteBook />
               </Route>
               <Route exact path="/bookmarks">
                 <BookmarkedNews/>
@@ -40,7 +34,7 @@ function App() {
             </Switch>
           </div>
         </Router>
-      </NoteState>
+      </NewsState>
     </>
   );
 }
