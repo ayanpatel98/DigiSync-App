@@ -81,7 +81,7 @@ const TopHeadlines = () => {
                                 </div>
                                 <div className='col-lg-3 col-md-12 m-3'>
                                     <select className="form-select form-select-sm" aria-label="country" onChange={setCountryDropdown}>
-                                        <option selected>Select Country</option>
+                                        <option defaultValue={'Select Country'}>Select Country</option>
                                         {
                                             countries.map((ctr, index) =>
                                                 <option key={index + 1} value={ctr}>{ctr}</option>
@@ -92,7 +92,7 @@ const TopHeadlines = () => {
 
                                 <div className='col-lg-3 col-md-12 m-3'>
                                     <select className="form-select form-select-sm" aria-label="category" onChange={setCategoryDropdown}>
-                                        <option selected>Select Category</option>
+                                        <option defaultValue={'Select Category'}>Select Category</option>
                                         {
                                             categories.map((cat, index) =>
                                                 <option key={index + 1} value={cat}>{cat}</option>

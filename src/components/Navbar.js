@@ -31,10 +31,14 @@ const Navbar = () => {
                         {
                             (isLoggedIn)
                                 ?
-
-                                <li className="nav-item">
-                                    <Link className={`nav-link ${location.pathname === "/bookmarks" ? "active" : ""}`} to="/bookmarks">Bookmarked News</Link>
-                                </li>
+                                <>
+                                    <li className="nav-item">
+                                        <Link className={`nav-link ${location.pathname === "/bookmarks" ? "active" : ""}`} to="/bookmarks">Bookmarked News</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className={`nav-link ${location.pathname === "/discussion" ? "active" : ""}`} to="/discussion">News Discussion</Link>
+                                    </li>
+                                </>
                                 :
                                 ''
                         }

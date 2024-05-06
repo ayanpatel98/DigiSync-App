@@ -10,6 +10,7 @@ import NewsState from './context/news/NewsState';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import BookmarkedNews from './components/BookmarkedNews';
+import NewsDiscussion from './components/NewsDiscussion';
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
               </Route>
               <Route exact path="/bookmarks">
                 <BookmarkedNews/>
+              </Route>
+              <Route exact path="/discussion">
+                <NewsDiscussion/>
               </Route>
               <Route exact path="/login">
                 <Login />

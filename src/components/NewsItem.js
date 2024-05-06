@@ -49,7 +49,7 @@ const NewsItem = (props) => {
       </div>
       <div className='card-body position-relative'>
         <div className="mt-1 mb-1 card-title"><strong>{props.itemData.title}</strong></div>
-        <p className='card-text'>{props.itemData.description}</p>
+        <p className='card-text overflow-hidden'>{props.itemData.description}</p>
         <a href={props.itemData.url} target='_blank' className="btn btn-primary position-absolute" style={{ bottom: '5%' }}>Open News</a>
       </div>
     </div>
