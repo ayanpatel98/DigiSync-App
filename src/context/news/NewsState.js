@@ -11,6 +11,7 @@ const NewsState = (props) => {
   const [bookmarkedNews, setBookmarkedNews] = useState(initialNews);
   const [user, setUser] = useState('');
   const [isLoggedIn, setLogin] = useState(false);
+  const [discussionMessageList, setDiscussionMessageList] = useState([]);
 
   // Reset all news when sign out
   const signOut = () => {
@@ -54,8 +55,6 @@ const NewsState = (props) => {
 
   // Add a News
   const addNews = async (newsItem) => {
-    // TODO: API Call
-    // API Call 
     const { author, title, description, url, urlToImage, publishedAt, content } = newsItem;
     const response = await fetch(`${host}/api/news/addnews`, {
       method: 'POST',
@@ -94,8 +93,8 @@ const NewsState = (props) => {
 
   return (
     <newsContext.Provider value={{
-      bookmarkedNews, user, isLoggedIn,
-      addNews, deleteNews, getBookmarkedNews, signOut, getUser
+      bookmarkedNews, user, isLoggedIn, discussionMessageList,
+      setDiscussionMessageList, addNews, deleteNews, getBookmarkedNews, signOut, getUser
     }}>
       {props.children}
     </newsContext.Provider>

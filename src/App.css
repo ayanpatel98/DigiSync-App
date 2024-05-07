@@ -108,3 +108,11 @@
   word-break: break-word;
 }
 
+.chatAuthor{
+  font-size: 12px;
+}
+
+.chatTime{
+  font-size: 12px;
+}
+

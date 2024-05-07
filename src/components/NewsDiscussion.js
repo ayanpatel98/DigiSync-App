@@ -1,29 +1,72 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import io from 'socket.io-client';
 import newsContext from '../context/news/newsContext';
 
+const socket = io.connect("http://localhost:5000");
+
 const NewsDiscussion = () => {
+    const [currentMessage, setCurrentMessage] = useState("");
     const context = useContext(newsContext);
-    const { getUser } = context;
+    const { getUser, user, discussionMessageList, setDiscussionMessageList } = context;
 
     useEffect(() => {
         getUser();
     }, [])
 
+    useEffect(() => {
+        socket.on("receive_message", (data) => {
+            setDiscussionMessageList((list) => [...list, data]);
+        });
+    }, [socket])
+
+    const sendMessage = async () => {
+        if (currentMessage !== "") {
+            const messageData = {
+                author: user,
+                message: currentMessage,
+                time:
+                    new Date(Date.now()).getHours() +
+                    ':' +
+                    new Date(Date.now()).getMinutes(),
+            };
+
+            await socket.emit("send_message", messageData);
+            setDiscussionMessageList((list) => [...list, messageData]);
+            setCurrentMessage("");
+        }
+    }
+
     return (
         <div className='row chatWrapper'>
             <div className='col-12 m-4 text-center'><h2>Member Discussion</h2></div>
             <div className='col-sm-8 p-2 chatBox border border-primary border-2 rounded-2'>
-                <div className='d-inline-block w-100'>
-                    <div className='bg-primary float-start' style={{width:'40%'}}>vfml</div>
-                </div>
-                <div className='d-inline-block w-100'>
-                    <div className='bg-primary float-end' style={{width:'40%'}}>vfml</div>
-                </div>
+                {
+                    (discussionMessageList && discussionMessageList.length > 0) ?
+                        discussionMessageList.map((item, index) => {
+                            return (
+                                <div key={index} className='d-inline-block w-100'>
+                                    <div className={item.author === user ? 'float-end': 'float-start'}
+                                        style={{ width: '40%' }}>
+                                        <div className={item.author === user ? 'bg-success border-2 rounded-2 p-1'
+                                            : 'bg-primary border-2 rounded-2 p-1'}
+                                        >{item.message}</div>
+                                        <div className='chatAuthor d-inline-block'><b>{item.author}</b></div>
+                                        <div className='chatTime d-inline-block mx-2'>{item.time}</div>
+                                    </div>
+                                </div>
+                            )
+                        })
+                        :
+                        <h5>You can join the conversation, please start typing...</h5>
+                }
             </div>
             <div className='col-sm-8 mt-3 chatBoxWrapper'>
                 <div className="input-group">
-                    <input type="text" className="form-control" placeholder="Type a message" aria-label="Recipient's username" aria-describedby="button-addon2"/>
-                        <button className="btn btn-outline-primary" type="button" id="button-addon2">Send</button>
+                    <input type="text" onChange={(event) => { setCurrentMessage(event.target.value) }}
+                        value={currentMessage} className="form-control" placeholder="Type a message"
+                        aria-label="Recipient's username" aria-describedby="button-addon2" />
+                    <button className="btn btn-outline-primary" type="button" id="button-addon2"
+                        onClick={sendMessage}>Send</button>
                 </div>
             </div>
         </div>
