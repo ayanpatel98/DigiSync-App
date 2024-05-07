@@ -14,6 +14,8 @@ const Login = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setCredentials({ email: "", password: "" });
+
         const response = await fetch("http://localhost:5000/api/auth/login", {
             method: 'POST',
             headers: {
@@ -28,10 +30,9 @@ const Login = (props) => {
             history.push("/");
             getUser();
             toast.success("You Logged In!", { autoClose: 2000 });
-
         }
         else {
-            alert("Invalid credentials");
+            toast.error(json.error);
         }
     }
 
@@ -40,29 +41,21 @@ const Login = (props) => {
     }
 
     return (
-        // <div className="btn-group dropstart m-1">
         <div className="btn-group m-1">
             <button type="button" className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="inside outside">
                 Login
             </button>
-            <form className="dropdown-menu p-4" onSubmit={handleSubmit} style={{left: 'unset', right:'0', width: '300px'}}>
+            <form className="dropdown-menu p-4" onSubmit={handleSubmit} id="loginForm"
+                style={{ left: 'unset', right: '0', width: '300px' }} noValidate>
                 <div className="mb-3">
                     <label htmlFor="exampleDropdownFormEmail2" className="form-label">Email address</label>
                     <input type="email" className="form-control" id="email" placeholder="email@example.com"
-                        value={credentials.email} onChange={onChange} name="email" aria-describedby="email" />
+                        value={credentials.email} onChange={onChange} name="email" aria-describedby="email" required />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="exampleDropdownFormPassword2" className="form-label">Password</label>
                     <input type="password" className="form-control" id="password" placeholder="Password"
-                        value={credentials.password} onChange={onChange} name="password" />
-                </div>
-                <div className="mb-3">
-                    <div className="form-check">
-                        <input type="checkbox" className="form-check-input" id="dropdownCheck2" />
-                        <label className="form-check-label" htmlFor="dropdownCheck2">
-                            Remember me
-                        </label>
-                    </div>
+                        value={credentials.password} onChange={onChange} name="password" required />
                 </div>
                 <button type="submit" className="btn btn-primary">Login</button>
             </form>

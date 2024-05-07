@@ -13,6 +13,8 @@ const TopHeadlines = () => {
         'eg', 'fr', 'gb', 'gr', 'hk', 'hu', 'id', 'ie', 'il', 'in', 'it', 'jp', 'kr', 'lt', 'lv', 'ma', 'mx',
         'my', 'ng', 'nl', 'no', 'nz', 'ph', 'pl', 'pt', 'ro', 'rs', 'ru', 'sa', 'se', 'sg', 'si', 'sk', 'th',
         'tr', 'tw', 'ua', 'us', 've', 'za']
+    
+        // in, kr, us, ca, nl, jp, sg, hk
 
     const [currCategory, setCategory] = useState('general');
     const [currCountry, setCountry] = useState('us');

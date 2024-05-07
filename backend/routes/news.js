@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const fetchuser = require('../middleware/fetchuser');
 const UserNews = require('../models/UserNews');
 
+// ROUTE 1: Get all news related to a user: POST "/api/news/fetchallnews". Login required
 router.get('/fetchallnews', fetchuser, async (req, res) => {
     try {
         const news = await UserNews.find({ user: req.user.id });
@@ -19,8 +20,10 @@ router.post('/addnews', fetchuser, async (req, res) => {
     try {
         const { author, title, description, url, urlToImage, publishedAt, content } = req.body;
 
+        // Create unique id news_id for a news item
         const news_id = await crypto.createHash('md5').update(title).digest('hex');
 
+        // Check if there is already existing news item with news_id for the current user
         let newsItem = await UserNews.find({ news_id: news_id, user: req.user.id });
         if (newsItem.length > 0) {
             return res.status(400).json({ status: 400, results: "Please do not send duplicate requests" });
@@ -28,9 +31,8 @@ router.post('/addnews', fetchuser, async (req, res) => {
 
         const news = new UserNews({
             news_id, author, title, description, url, urlToImage, publishedAt, content, user: req.user.id
-        })
+        });
         const savedNews = await news.save();
-
         res.json({ status: 200, results: savedNews });
 
     } catch (error) {
@@ -39,13 +41,13 @@ router.post('/addnews', fetchuser, async (req, res) => {
     }
 })
 
-// ROUTE 4: Delete an existing news using: DELETE "/api/news/deletenews". Login required
+// ROUTE 3: Delete an existing news using: DELETE "/api/news/deletenews". Login required
 router.delete('/deletenews/:id', fetchuser, async (req, res) => {
     try {
         // Find the news to be delete and delete it
         let news = await UserNews.findById(req.params.id);
         if (!news) {
-            return res.status(404).json({ status: 404, message: "News not Found" })
+            return res.status(404).json({ status: 404, message: "News not Found" });
         }
 
         // Allow deletion only if user owns this news because it checks the user id from the JWT and the database entry
@@ -61,4 +63,4 @@ router.delete('/deletenews/:id', fetchuser, async (req, res) => {
     }
 })
 
-module.exports = router
+module.exports = router;

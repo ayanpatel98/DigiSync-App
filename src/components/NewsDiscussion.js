@@ -38,7 +38,7 @@ const NewsDiscussion = () => {
 
     return (
         <div className='row chatWrapper'>
-            <div className='col-12 m-4 text-center'><h2>Member Discussion</h2></div>
+            <div className='col-12 m-4 text-center'><h2>Cummunity Discussion</h2></div>
             <div className='col-sm-8 p-2 chatBox border border-primary border-2 rounded-2'>
                 {
                     (discussionMessageList && discussionMessageList.length > 0) ?
