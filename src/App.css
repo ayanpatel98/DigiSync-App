@@ -90,3 +90,21 @@
   right: 15px;
 }
 
+.chatWrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chatBoxWrapper{
+  padding: unset;
+}
+
+.chatBox{
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 30px;
+  max-height: 400px;
+  word-break: break-word;
+}
+
