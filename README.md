@@ -1,70 +1,22 @@
-# Getting Started with Create React App
+## About the application:
+- This is a web-based application a.k.a 'DigiSync', it is based on the news data provided by the 'https://newsapi.org' api. 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- This application is developed using technologies such as Javascript, React.js, Node.js/Express.js and MongoDB Compass which creates it a full-stack MERN application. By using this application a user can get a personalized experience to view the news articles across the globe, either countrywise or categorywise. The news articles is viewed in a card like format on the screen and a user has the freedom to save/delete the news as a bookmark for his personal records and can also visit the origin/root website of the news article. Navigation is implemented in the UI so that bookmarks can be viewed on a separated page which can be navigated from throught the application.
 
-## Available Scripts
+- Without logging in, the user just can see the home page containing only limited news article cards with out personalization. To get the above described personalized experience, a user has to signup/register to this application and can also login to this application in future. This application is very secure for a user because security mechanisms such as JSON Web Token authentication and several validations are implemented which makes this application to have a robust authentication mechanism.
 
-In the project directory, you can run:
+- Finally, all the registered users can have a live real-time communication chat session for the discussion of the news articles by navigating in to the UI to a separate discussions page. This functionality was made possible using web-sockets.
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Installation and setup:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Application Walkthrough:
+- All the news articles being displayed on the home page, either before or agter logging, are populated using the 'https://newsapi.org' api which are being fetched in the frontend itself. The data such as registered users and their bookmarked news articles are saved in the MongoDB database with the help of Node.js backend.
 
-### `npm test`
+- For the backend and database part, implementation is done in the 'backend' folder, Mongoose library is used to make a connection/interact with the MongoDB database and for defining the database table/collection schema in the 'backend/models' folder. For the JWT authentication implementation, 'bcrypt.js' library is used. Also, for implementing web-sockets, 'socket.io' library is used. API endpoints/routes are created in the 'backend/routes' folder which contains endpoints related to authentication and news data manipulation within the database. The backend server along with the api routes and web-socket server are defined in the 'backend/index.js' file.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+-> Note: The connection string to connect Node.js backend to the MongoDB database is included in the 'backend/db.js' file.
 
-### `npm run build`
+- For the front-end part, implementation is done in the '<root_dir>/src' folder where all the code related to components, context APIs, and styling is written. 'Bootstrap' CSS framework is used for styling pusposes. 'InfiniteScroll' library is used to enable a functionality for a logged in user where a user can scroll through the news article cards on the home page infinitely to the bottom, fetching the news articles batch wise upon scrolling (to prevent fetching all the news article at once) and until there are no news articles to fetch. Context API is defined in the '/context/news' folder where all the global states are stored.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+-> Note: The API Key for the 'https://newsapi.org' api is included in the 'src/components/TopHeadlines.js' file. There is also another alternate API_KEY commented, in case the current one throws an error of request limit exceeded.
