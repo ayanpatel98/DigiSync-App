@@ -10,6 +10,7 @@ const port = 5000;
 
 const server = http.createServer(app);
 
+// Create web socket server
 const io = new Server(server, {
     cors: {
         origins: 'http://localhost:*',
@@ -17,12 +18,14 @@ const io = new Server(server, {
     },
 });
 
+// Enable CORS in the express app
 app.use(cors())
 app.use(express.json())
 
 io.on('connection', (socket) => {
     console.log(`User Connected: ${socket.id}`);
 
+    // Get message from a client and broadcast it to all
     socket.on("send_message", (data) => {
         socket.broadcast.emit("receive_message", data);
     });
@@ -35,7 +38,6 @@ io.on('connection', (socket) => {
 // Available Routes
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/news', require('./routes/news'))
-
 
 server.listen(port, () => {
     console.log(`Backend Server listening at http://localhost:${port}`)

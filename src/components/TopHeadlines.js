@@ -5,9 +5,12 @@ import NewsItem from './NewsItem';
 import Spinner from './Spinner';
 
 const TopHeadlines = () => {
+    // base api url and its api key
     const base_url = "https://newsapi.org/v2/top-headlines"
-    // const API_KEY = "497d794b41104ef8b2740f56d3825120";
-    const API_KEY = "61424d01c67c488a9076e51c63f61276";
+    const API_KEY = "497d794b41104ef8b2740f56d3825120"; //  Primary API key
+    // const API_KEY = "61424d01c67c488a9076e51c63f61276"; // Alternate API Key in case request limit exceeds
+
+    // news categories and countries for user choice
     const categories = ["business", "entertainment", "general", "health", "science", "sports", "technology"];
     const countries = ['ae', 'ar', 'at', 'au', 'be', 'bg', 'br', 'ca', 'ch', 'cn', 'co', 'cu', 'cz', 'de',
         'eg', 'fr', 'gb', 'gr', 'hk', 'hu', 'id', 'ie', 'il', 'in', 'it', 'jp', 'kr', 'lt', 'lv', 'ma', 'mx',
@@ -16,6 +19,7 @@ const TopHeadlines = () => {
     
         // in, kr, us, ca, nl, jp, sg, hk
 
+    // states
     const [currCategory, setCategory] = useState('general');
     const [currCountry, setCountry] = useState('us');
     const [topHeadlines, setTopHeadlines] = useState([]);
@@ -23,9 +27,11 @@ const TopHeadlines = () => {
     const [totalResults, setTotalResults] = useState(0);
     const [loading, setLoading] = useState(true);
 
+    // context
     const userContext = useContext(newsContext);
     const { getUser, isLoggedIn } = userContext;
 
+    // Fetch the news based on the country and category
     const fetchTopHeadlines = async (country, category, page) => {
         setCountry(country);
         setCategory(category);
@@ -33,16 +39,17 @@ const TopHeadlines = () => {
         setLoading(true);
         let response = await fetch(url);
         response = await response.json();
-        setTopHeadlines(response.articles);
-        setTotalResults(response.totalResults);
+        setTopHeadlines(response.articles); // set the initial news list
+        setTotalResults(response.totalResults); // set the total available news results
         setLoading(false);
     }
 
+    // Used with the infinity scroll feature
     const fetchMoreData = async () => {
         const url = await `${base_url}?country=${currCountry}&category=${currCategory}&pageSize=${5}&page=${currPage + 1}&apiKey=${API_KEY}`;
         let response = await fetch(url);
         response = await response.json();
-        setTopHeadlines(topHeadlines.concat(response.articles));
+        setTopHeadlines(topHeadlines.concat(response.articles)); // add the response list
         setTotalResults(response.totalResults);
         setPage(currPage + 1)
     }
@@ -55,8 +62,10 @@ const TopHeadlines = () => {
         fetchTopHeadlines(currCountry, e.target.value, 1);
     }
 
+    // Fetch the headlines and the user
     useEffect(() => {
         fetchTopHeadlines('us', 'general', 1);
+        // get the user name if the user logs in
         if (localStorage.getItem('token')) {
             getUser();
         };
@@ -67,6 +76,7 @@ const TopHeadlines = () => {
             {
                 <div className='row'>
                     {
+                        // render the elements based on the login status
                         (!isLoggedIn)
                             ?
                             <div className='col-12'>
@@ -107,8 +117,10 @@ const TopHeadlines = () => {
                 </div>
             }
             {
+                // Render the elements based on the login status
                 (!isLoggedIn)
                     ?
+                    // Initially display only the sample news items
                     <div className='row my-2'>
                         {
                             topHeadlines.map(
@@ -124,6 +136,7 @@ const TopHeadlines = () => {
                         }
                     </div>
                     :
+                    // Infinity scroll section when user logs in
                     <div className='row my-2'>
                         {loading && <Spinner />}
                         <InfiniteScroll
@@ -153,4 +166,4 @@ const TopHeadlines = () => {
     )
 }
 
-export default TopHeadlines
+export default TopHeadlines;

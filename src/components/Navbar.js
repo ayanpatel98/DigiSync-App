@@ -1,19 +1,19 @@
 import { React, useContext, useState } from 'react'
-import { Link, useLocation, useHistory } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import newsContext from '../context/news/newsContext';
 import Login from './Login';
 import Signup from './Signup';
 
 const Navbar = () => {
     let location = useLocation();
-    let history = useHistory();
+    const navigate = useNavigate();
     const context = useContext(newsContext);
     const { signOut, user, isLoggedIn } = context;
 
+    // sign out event
     const handleSignOut = () => {
-        localStorage.removeItem('token');
-        history.push('/');
         signOut();
+        navigate('/'); // navigate to the home page
     }
 
     return (
@@ -29,14 +29,17 @@ const Navbar = () => {
                             <Link className={`nav-link ${location.pathname === "/" ? "active" : ""}`} aria-current="page" to="/">Home</Link>
                         </li>
                         {
+                            // Display elements when the user logs in
                             (isLoggedIn)
                                 ?
                                 <>
                                     <li className="nav-item">
-                                        <Link className={`nav-link ${location.pathname === "/bookmarks" ? "active" : ""}`} to="/bookmarks">Bookmarked News</Link>
+                                        <Link className={`nav-link ${location.pathname === "/bookmarks" ? "active" : ""}`}
+                                            to="/bookmarks">Bookmarked News</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className={`nav-link ${location.pathname === "/discussion" ? "active" : ""}`} to="/discussion">News Discussion</Link>
+                                        <Link className={`nav-link ${location.pathname === "/discussion" ? "active" : ""}`}
+                                            to="/discussion">News Discussion</Link>
                                     </li>
                                 </>
                                 :
@@ -44,8 +47,9 @@ const Navbar = () => {
                         }
 
                     </ul>
-                    {localStorage.getItem('token')
+                    {(isLoggedIn)
                         ?
+                        // User Signout
                         <>
                             <div className="text-center inline-block">
                                 <div className="btn-group dropstart">
@@ -59,6 +63,7 @@ const Navbar = () => {
                             </div>
                         </>
                         :
+                        // Login and signup components
                         <>
                             <Login />
                             <Signup />

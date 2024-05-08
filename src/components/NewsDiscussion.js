@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import newsContext from '../context/news/newsContext';
 
+// web socket connection
 const socket = io.connect("http://localhost:5000");
 
 const NewsDiscussion = () => {
@@ -14,6 +15,7 @@ const NewsDiscussion = () => {
     }, [])
 
     useEffect(() => {
+        // add message when message is received
         socket.on("receive_message", (data) => {
             setDiscussionMessageList((list) => [...list, data]);
         });
@@ -29,7 +31,7 @@ const NewsDiscussion = () => {
                     ':' +
                     new Date(Date.now()).getMinutes(),
             };
-
+            // sent message via web socket connection
             await socket.emit("send_message", messageData);
             setDiscussionMessageList((list) => [...list, messageData]);
             setCurrentMessage("");
@@ -37,10 +39,12 @@ const NewsDiscussion = () => {
     }
 
     return (
+        // Chatbox Section
         <div className='row chatWrapper'>
-            <div className='col-12 m-4 text-center'><h2>Cummunity Discussion</h2></div>
+            <div className='col-12 m-4 text-center'><h2>Community Discussion</h2></div>
             <div className='col-sm-8 p-2 chatBox border border-primary border-2 rounded-2'>
                 {
+                    // Chat message list length check
                     (discussionMessageList && discussionMessageList.length > 0) ?
                         discussionMessageList.map((item, index) => {
                             return (

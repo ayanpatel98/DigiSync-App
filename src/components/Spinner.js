@@ -1,6 +1,7 @@
 import React from 'react'
 import loading from './loading.gif'
 
+// Spinner component for loading animation
 const Spinner = ()=> {
         return (
             <div className="text-center">

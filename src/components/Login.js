@@ -1,17 +1,17 @@
 import React, { useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import newsContext from '../context/news/newsContext';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 toast.configure();
 
-
-const Login = (props) => {
+const Login = () => {
     const [credentials, setCredentials] = useState({ email: "", password: "" })
-    let history = useHistory();
+    const navigate = useNavigate();
     const context = useContext(newsContext);
     const { getUser } = context;
 
+    // Handle for login
     const handleSubmit = async (e) => {
         e.preventDefault();
         setCredentials({ email: "", password: "" });
@@ -25,9 +25,9 @@ const Login = (props) => {
         });
         const json = await response.json()
         if (json.success) {
-            // Save the auth token and redirect
+            // Save the auth token in the local storage and redirect
             localStorage.setItem('token', json.authtoken);
-            history.push("/");
+            navigate('/');
             getUser();
             toast.success("You Logged In!", { autoClose: 2000 });
         }
@@ -41,6 +41,7 @@ const Login = (props) => {
     }
 
     return (
+        // Login form Section
         <div className="btn-group m-1">
             <button type="button" className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="inside outside">
                 Login
@@ -50,12 +51,12 @@ const Login = (props) => {
                 <div className="mb-3">
                     <label htmlFor="exampleDropdownFormEmail2" className="form-label">Email address</label>
                     <input type="email" className="form-control" id="email" placeholder="email@example.com"
-                        value={credentials.email} onChange={onChange} name="email" aria-describedby="email" required />
+                        value={credentials.email} onChange={onChange} name="email" aria-describedby="email" />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="exampleDropdownFormPassword2" className="form-label">Password</label>
                     <input type="password" className="form-control" id="password" placeholder="Password"
-                        value={credentials.password} onChange={onChange} name="password" required />
+                        value={credentials.password} onChange={onChange} name="password" />
                 </div>
                 <button type="submit" className="btn btn-primary">Login</button>
             </form>
@@ -63,4 +64,4 @@ const Login = (props) => {
     )
 }
 
-export default Login
+export default Login;

@@ -1,5 +1,5 @@
 import { React, useState, useContext } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import newsContext from '../context/news/newsContext';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -7,10 +7,11 @@ toast.configure();
 
 const Signup = () => {
     const [credentials, setCredentials] = useState({ name: "", email: "", password: "", passwordConfirm: "" })
-    let history = useHistory();
+    let navigate = useNavigate();
     const context = useContext(newsContext);
     const { getUser } = context;
 
+    // Hangle for Signup
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -30,7 +31,7 @@ const Signup = () => {
             const json = await response.json()
             if (json.success) {
                 localStorage.setItem('token', json.authtoken);
-                history.push("/");
+                navigate("/");
                 toast.success("You Have Signed Up!", { autoClose: 2000 });
                 getUser();
             }
@@ -45,6 +46,7 @@ const Signup = () => {
     }
 
     return (
+        // Signup Form section
         <div className="btn-group m-1">
             <button type="button" className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="inside outside">
                 Signup
@@ -77,4 +79,4 @@ const Signup = () => {
     )
 }
 
-export default Signup
+export default Signup;
