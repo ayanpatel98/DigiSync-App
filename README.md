@@ -13,7 +13,7 @@
 
 Frontend used: React v17.0.2
 backend used: Node.js v16.17.1 && Express.js
-Database used: MongoDB Compass (local computer) / MongoDB atlas (cloud)
+Database used: MongoDB Compass (GUI) (local computer) / MongoDB atlas (cloud)
 
 - Frontend: 
     - Install the react dependencies by entering the 'npm install' command in the terminal in the root directory.
@@ -28,7 +28,7 @@ Database used: MongoDB Compass (local computer) / MongoDB atlas (cloud)
 
 - Database:
     1st approach:-
-    - To use the database, install the MongoDB Compass version on the local computer.
+    - To use the database, install the MongoDB Compass (GUI) version on the local computer.
     - Start the database connection by clicking on the 'New Connection', keep the default settings and copy the connection string/URI (which would look like 'mongodb://localhost:27017') and click on 'connect' button.
     - For establishing the connection with the backend, paste the copied connection URI as a value of the 'mongoURI' variable in the 'backend/db.js' file.
 

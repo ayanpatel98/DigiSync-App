@@ -22,8 +22,6 @@ app.use(cors())
 app.use(express.json())
 
 io.on('connection', (socket) => {
-    console.log(`User Connected: ${socket.id}`);
-
     // Get message from a client and broadcast it to all
     socket.on("send_message", (data) => {
         socket.broadcast.emit("receive_message", data);

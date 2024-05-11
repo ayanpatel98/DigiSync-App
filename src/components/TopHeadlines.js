@@ -12,12 +12,15 @@ const TopHeadlines = () => {
 
     // news categories and countries for user choice
     const categories = ["business", "entertainment", "general", "health", "science", "sports", "technology"];
-    const countries = ['ae', 'ar', 'at', 'au', 'be', 'bg', 'br', 'ca', 'ch', 'cn', 'co', 'cu', 'cz', 'de',
-        'eg', 'fr', 'gb', 'gr', 'hk', 'hu', 'id', 'ie', 'il', 'in', 'it', 'jp', 'kr', 'lt', 'lv', 'ma', 'mx',
-        'my', 'ng', 'nl', 'no', 'nz', 'ph', 'pl', 'pt', 'ro', 'rs', 'ru', 'sa', 'se', 'sg', 'si', 'sk', 'th',
-        'tr', 'tw', 'ua', 'us', 've', 'za']
-    
-        // in, kr, us, ca, nl, jp, sg, hk
+    const countries = [
+        { code: 'us', value: 'United States' },
+        { code: 'in', value: 'India' },
+        { code: 'nl', value: 'Netherlands' },
+        { code: 'jp', value: 'Japan' },
+        { code: 'kr', value: 'Korea' },
+        { code: 'ca', value: 'Canada' },
+        { code: 'sg', value: 'Singapore' },
+        { code: 'hk', value: 'Hongkong' }]
 
     // states
     const [currCategory, setCategory] = useState('general');
@@ -96,7 +99,7 @@ const TopHeadlines = () => {
                                         <option defaultValue={'Select Country'}>Select Country</option>
                                         {
                                             countries.map((ctr, index) =>
-                                                <option key={index + 1} value={ctr}>{ctr}</option>
+                                                <option key={index + 1} value={ctr.code}>{ctr.value}</option>
                                             )
                                         }
                                     </select>
