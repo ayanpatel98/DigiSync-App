@@ -5,7 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 toast.configure();
 
 const NewsState = (props) => {
-	const host = "http://localhost:5000"; // Backend URL
+	
+	const host = "http://18.144.79.186:5000"; // Backend URL
 	const initialNews = []; // news list for bookmarks
 	const [bookmarkedNews, setBookmarkedNews] = useState(initialNews);
 	const [user, setUser] = useState(''); // get user name

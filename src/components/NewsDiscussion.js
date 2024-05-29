@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import newsContext from '../context/news/newsContext';
 
 // web socket connection
-const socket = io.connect("http://localhost:5000");
+const socket = io.connect("http://18.144.79.186:5000");
 
 const NewsDiscussion = () => {
     const [currentMessage, setCurrentMessage] = useState("");
