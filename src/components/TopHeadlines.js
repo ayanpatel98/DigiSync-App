@@ -6,7 +6,8 @@ import Spinner from './Spinner';
 
 const TopHeadlines = () => {
     // base api url and its api key
-    const base_url = "https://newsapi.org/v2/top-headlines"
+    // const base_url = "https://newsapi.org/v2/top-headlines"
+    const base_url = "http://18.144.79.186:8080/digisync/api"
     const API_KEY = "497d794b41104ef8b2740f56d3825120"; //  Primary API key
     // const API_KEY = "61424d01c67c488a9076e51c63f61276"; // Alternate API Key in case request limit exceeds
 
