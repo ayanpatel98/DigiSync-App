@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 toast.configure();
 
-const NewsState = (props) => {
+const NewsState = (props) => { 
 	
 	const host = "http://18.144.79.186:5000"; // Backend URL
 	const initialNews = []; // news list for bookmarks
